@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Penilai Kesalahan AJM 2011 — Alat Sokongan PDK</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1F4E7C">
+<meta name="description" content="Alat sokongan PDK — penilaian awal peruntukan di bawah Akta Juruanalisis Makanan 2011, Peraturan 2013 & Garis Panduan Etika.">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="AJM PDK">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+<style>
+  :root{
+    --cream:#EDF1F6; --cream2:#E2E8F0; --card:#FFFFFF;
+    --cocoa:#17273A; --cocoa2:#415168; --mute:#7C8A9C;
+    --caramel:#2C6CA6; --caramel-d:#1F4E7C; --line:#D5DEE8;
+    --red:#B23A2E; --red-bg:#FAEBE8; --red-line:#E6BCB5;
+    --orange:#B4701C; --orange-bg:#FBF1DF; --orange-line:#EAD4AC;
+    --gold:#8A6D18; --gold-bg:#F5F0D6; --gold-line:#DDD197;
+    --slate:#52606B; --slate-bg:#E8ECEF; --slate-line:#C7CFD6;
+    --teal:#1B6E73; --teal-bg:#E0EEEE; --teal-line:#AFD3D2;
+    --shadow:0 1px 2px rgba(23,39,58,.06),0 6px 20px rgba(23,39,58,.08);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--cream);color:var(--cocoa);
+    font-family:"Segoe UI",system-ui,-apple-system,Arial,sans-serif;line-height:1.5;font-size:15px}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 18px}
+
+  /* Header */
+  header.top{background:linear-gradient(135deg,#132A44,#1F4E7C);color:#EAF1F8;padding:24px 0 20px;
+    transition:padding .15s;position:sticky;top:0;z-index:20}
+  header.top.stuck{box-shadow:0 4px 14px rgba(23,39,58,.18)}
+  header.top .wrap{display:flex;gap:16px;align-items:flex-start;flex-wrap:nowrap}
+  .crest{width:50px;height:50px;border-radius:12px;background:#2C6CA6;flex:0 0 auto;
+    display:flex;align-items:center;justify-content:center;font-weight:800;font-size:17px;color:#fff;
+    box-shadow:inset 0 0 0 2px rgba(255,255,255,.22)}
+  .htext{flex:1;min-width:0}
+  header.top h1{margin:0 0 4px;font-size:20px;letter-spacing:.2px;line-height:1.25}
+  header.top p{margin:0;color:#AEC5DE;font-size:13.5px}
+  .tagrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+  .tag{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);color:#CFE0F2;
+    padding:3px 10px;border-radius:999px;font-size:11.5px;font-weight:600}
+  .hcollapse{flex:0 0 auto;width:32px;height:32px;border-radius:9px;cursor:pointer;
+    background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);color:#EAF1F8;
+    font-size:13px;line-height:1;transition:.15s;align-self:flex-start}
+  .hcollapse:hover{background:rgba(255,255,255,.2)}
+  header.top.collapsed{padding:10px 0}
+  header.top.collapsed .crest{width:34px;height:34px;font-size:13px;border-radius:9px}
+  header.top.collapsed h1{font-size:16px;margin:0}
+  header.top.collapsed p,header.top.collapsed .tagrow{display:none}
+  header.top.collapsed .hcollapse{transform:rotate(-90deg)}
+  header.top.collapsed .wrap{align-items:center}
+
+  /* Disclaimer */
+  .disclaimer{background:var(--orange-bg);border-bottom:1px solid var(--orange-line);color:#6E4A16;
+    font-size:12.5px;padding:10px 0;position:sticky;top:var(--header-h,0);z-index:15}
+  .disclaimer.stuck{box-shadow:0 4px 12px rgba(23,39,58,.1)}
+  .disclaimer .wrap{display:flex;gap:10px;align-items:flex-start}
+  .disclaimer b{color:#5a3a0e}
+
+  /* Layout */
+  main{padding:22px 0 60px}
+  .grid{display:grid;grid-template-columns:1fr 360px;gap:22px;align-items:start}
+  @media(max-width:900px){.grid{grid-template-columns:1fr}}
+
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow)}
+  .panel h2{margin:0;padding:15px 18px;font-size:15px;border-bottom:1px solid var(--line);
+    display:flex;align-items:center;gap:8px}
+  .panel .body{padding:16px 18px}
+
+  /* Field note */
+  .fieldnote{margin-bottom:18px}
+  .fieldnote .body{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:560px){.fieldnote .body{grid-template-columns:1fr}}
+  .fieldnote label{display:block;font-size:11.5px;font-weight:700;color:var(--cocoa2);
+    text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px}
+  .fieldnote input{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:9px;
+    font-size:14px;background:#FFFDFA;color:var(--cocoa);font-family:inherit}
+  .fieldnote input:focus{outline:2px solid var(--caramel);border-color:transparent}
+  .fn-note{grid-column:1/-1;font-size:11.5px;color:var(--mute);font-style:italic}
+
+  /* Search + filters */
+  .searchbar{position:relative;margin-bottom:12px}
+  .searchbar input{width:100%;padding:12px 14px 12px 40px;border:1px solid var(--line);border-radius:11px;
+    font-size:15px;background:#FFFDFA;font-family:inherit}
+  .searchbar input:focus{outline:2px solid var(--caramel);border-color:transparent}
+  .searchbar svg{position:absolute;left:13px;top:12px;opacity:.45}
+  .filters{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:6px}
+  .chip{border:1px solid var(--line);background:#fff;color:var(--cocoa2);border-radius:999px;
+    padding:6px 13px;font-size:12.5px;cursor:pointer;font-weight:600;transition:.12s;font-family:inherit}
+  .chip:hover{border-color:var(--caramel)}
+  .chip.active{background:var(--cocoa);color:#EAF1F8;border-color:var(--cocoa)}
+  .counthint{font-size:12px;color:var(--mute);margin:10px 2px 14px}
+
+  /* Finding cards */
+  .cat-head{font-size:12px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;
+    color:var(--caramel-d);margin:18px 2px 9px;padding-top:6px;border-top:1px dashed var(--line)}
+  .cat-head:first-child{border-top:none;padding-top:0;margin-top:2px}
+  .finding{border:1px solid var(--line);border-radius:12px;background:var(--card);margin-bottom:9px;
+    overflow:hidden;transition:.12s}
+  .finding:hover{border-color:var(--caramel)}
+  .finding.sel{border-color:var(--caramel);box-shadow:0 0 0 2px rgba(169,116,63,.22)}
+  .f-head{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;cursor:pointer}
+  .f-check{flex:0 0 auto;width:22px;height:22px;border-radius:6px;border:2px solid var(--line);
+    margin-top:1px;display:flex;align-items:center;justify-content:center;transition:.12s}
+  .finding.sel .f-check{background:var(--caramel);border-color:var(--caramel);color:#fff}
+  .f-check svg{display:none}
+  .finding.sel .f-check svg{display:block}
+  .f-main{flex:1;min-width:0}
+  .f-label{font-size:14px;font-weight:600;color:var(--cocoa);margin-bottom:5px}
+  .f-badges{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+  .vbadge{font-size:10.5px;font-weight:800;letter-spacing:.3px;padding:2px 8px;border-radius:5px;
+    text-transform:uppercase;white-space:nowrap}
+  .ref-mini{font-size:11.5px;color:var(--mute);font-weight:600}
+  .v-jenayah{background:var(--red-bg);color:var(--red);border:1px solid var(--red-line)}
+  .v-etika{background:var(--orange-bg);color:var(--orange);border:1px solid var(--orange-line)}
+  .v-tatatertib{background:var(--gold-bg);color:var(--gold);border:1px solid var(--gold-line)}
+  .v-luar{background:var(--slate-bg);color:var(--slate);border:1px solid var(--slate-line)}
+  .v-kuasa{background:var(--teal-bg);color:var(--teal);border:1px solid var(--teal-line)}
+  .expand{color:var(--caramel-d);font-size:12px;font-weight:700;cursor:pointer;
+    padding:0 14px 0 48px;user-select:none}
+  .f-detail{display:none;padding:2px 14px 14px 48px;font-size:13px;color:var(--cocoa2)}
+  .finding.open .f-detail{display:block}
+  .f-detail .row{margin:7px 0}
+  .f-detail .k{font-weight:700;color:var(--cocoa);font-size:11.5px;text-transform:uppercase;
+    letter-spacing:.3px;display:block;margin-bottom:2px}
+  .prov{background:var(--cream);border:1px solid var(--line);border-radius:8px;padding:7px 10px;margin:4px 0;font-size:12.5px}
+  .prov b{color:var(--caramel-d)}
+  .verify{background:#EDF3F9;border-left:3px solid var(--caramel);padding:7px 10px;border-radius:0 7px 7px 0;
+    font-size:12px;color:#2C4A68;margin-top:6px}
+
+  /* Sidebar / report */
+  .side{position:sticky;top:var(--stick,16px)}
+  .summary-counts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+  .scount{border-radius:10px;padding:10px 12px;border:1px solid}
+  .scount .n{font-size:22px;font-weight:800;line-height:1}
+  .scount .l{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;margin-top:3px}
+  .sc-j{background:var(--red-bg);border-color:var(--red-line);color:var(--red)}
+  .sc-e{background:var(--orange-bg);border-color:var(--orange-line);color:var(--orange)}
+  .sc-t{background:var(--gold-bg);border-color:var(--gold-line);color:var(--gold)}
+  .sc-l{background:var(--slate-bg);border-color:var(--slate-line);color:var(--slate)}
+  .empty{color:var(--mute);font-size:13px;text-align:center;padding:26px 10px}
+  .sel-item{border:1px solid var(--line);border-radius:10px;padding:10px 11px;margin-bottom:8px;position:relative}
+  .sel-item .si-label{font-size:13px;font-weight:600;padding-right:22px;margin-bottom:5px}
+  .sel-item .si-prov{font-size:11.5px;color:var(--cocoa2);margin:3px 0}
+  .sel-item .si-prov b{color:var(--caramel-d)}
+  .si-remove{position:absolute;top:8px;right:9px;cursor:pointer;color:var(--mute);font-size:16px;
+    line-height:1;border:none;background:none}
+  .si-remove:hover{color:var(--red)}
+  .si-pen{font-size:11.5px;color:#2C4A68;background:#EDF3F9;border-radius:6px;padding:5px 8px;margin-top:5px}
+  .actions{display:flex;gap:8px;margin-top:14px}
+  .btn{flex:1;border:none;border-radius:10px;padding:11px;font-size:13.5px;font-weight:700;cursor:pointer;
+    font-family:inherit;transition:.12s}
+  .btn-primary{background:var(--cocoa);color:#EAF1F8}
+  .btn-primary:hover{background:#1F4E7C}
+  .btn-ghost{background:#fff;color:var(--cocoa2);border:1px solid var(--line)}
+  .btn-ghost:hover{border-color:var(--caramel)}
+  .btn:disabled{opacity:.45;cursor:not-allowed}
+  .btn-reset{margin-left:auto;border:1px solid var(--line);background:#fff;color:var(--cocoa2);
+    border-radius:8px;padding:6px 12px;font-size:12.5px;font-weight:700;cursor:pointer;font-family:inherit;
+    display:inline-flex;align-items:center;gap:6px;transition:.12s}
+  .btn-reset:hover{border-color:var(--red);color:var(--red)}
+  .fn-fold{margin-left:8px;flex:0 0 auto;width:30px;height:30px;border-radius:8px;cursor:pointer;
+    border:1px solid var(--line);background:#fff;color:var(--cocoa2);font-size:12px;line-height:1;transition:.15s}
+  .fn-fold:hover{border-color:var(--caramel);color:var(--caramel)}
+  .fieldnote.folded .body{display:none}
+  .fieldnote.folded .fn-fold{transform:rotate(-90deg)}
+  /* Freeze pane: Nota Lapangan kekal kelihatan di bawah penafian beku */
+  .fieldnote{position:sticky;top:var(--stick,10px);z-index:8}
+  .fieldnote.stuck{box-shadow:0 2px 2px rgba(23,39,58,.06),0 10px 24px rgba(23,39,58,.12)}
+
+  footer{border-top:1px solid var(--line);padding:22px 0 50px;color:var(--mute);font-size:12px;background:var(--cream2)}
+  footer .wrap{display:flex;flex-direction:column;gap:6px}
+  footer a{color:var(--caramel-d)}
+  .credit{opacity:.4;font-size:11px;font-weight:600;letter-spacing:.4px;margin-top:10px}
+  details.ref{margin-top:10px}
+  details.ref summary{cursor:pointer;font-weight:700;color:var(--cocoa);font-size:13px}
+  details.ref .inner{font-size:12.5px;color:var(--cocoa2);padding:8px 0 0}
+  details.ref table{width:100%;border-collapse:collapse;margin-top:6px;font-size:12px}
+  details.ref th,details.ref td{border:1px solid var(--line);padding:5px 8px;text-align:left;vertical-align:top}
+  details.ref th{background:var(--cream);font-weight:700}
+
+  /* Print */
+  @media print{
+    body{background:#fff}
+    header.top,.disclaimer,.leftcol,.filters,.searchbar,.counthint,.actions,.chip,.expand,footer{display:none!important}
+    .grid{display:block}
+    .side{position:static}
+    .panel{box-shadow:none;border:1px solid #999}
+    #printHead{display:block!important}
+  }
+  #printHead{display:none;margin-bottom:14px}
+  #printHead h2{border:none;padding:0 0 4px}
+  #printHead .pmeta{font-size:12px;color:#333}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="crest">AJM</div>
+    <div class="htext">
+      <h1>Penilai Kesalahan — Akta Juruanalisis Makanan 2011 (Akta 727)</h1>
+      <p>Alat sokongan keputusan untuk Pegawai Diberi Kuasa (PDK) semasa pemeriksaan / serbuan lapangan</p>
+      <div class="tagrow">
+        <span class="tag">Akta 727</span>
+        <span class="tag">Peraturan-Peraturan 2013 [P.U. (A) 93]</span>
+        <span class="tag">Garis Panduan Kelakuan &amp; Etika (MJMM)</span>
+      </div>
+    </div>
+    <button class="hcollapse" id="hCollapse" title="Lipat / buka tajuk" aria-label="Lipat tajuk">▾</button>
+  </div>
+</header>
+
+<div class="disclaimer">
+  <div class="wrap">
+    <span>⚠️</span>
+    <div><b>Alat bantu, bukan keputusan undang-undang.</b> Output di sini ialah <b>penilaian awal</b> untuk membantu PDK mengenal pasti peruntukan yang mungkin terpakai <b>sekiranya terdapat ketidakpatuhan</b>.<br>Ia <b>bukan</b> penentuan muktamad kesalahan, bukan borang rasmi KKM/MJMM, dan tidak menggantikan teks perundangan semasa, syarat pelantikan, SOP atau nasihat penasihat undang-undang. Sahkan setiap peruntukan dengan teks Akta/Peraturan terkini (AGC / portal BKKM) sebelum sebarang tindakan. Pendakwaan hanya dengan keizinan Pendakwa Raya (s.44).</div>
+  </div>
+</div>
+
+<main>
+<div class="wrap grid">
+
+  <!-- LEFT: finder -->
+  <div class="leftcol">
+    <div class="panel fieldnote">
+      <h2>📋 Nota Lapangan <span style="font-weight:400;color:var(--mute);font-size:12px">(pilihan — untuk cetakan)</span>
+        <button class="btn-reset" id="btnReset" title="Kembalikan semua medan, carian, tapisan &amp; penemuan ke keadaan asal">↺ Set Semula</button>
+        <button class="fn-fold" id="fnFold" title="Lipat / buka Nota Lapangan" aria-label="Lipat Nota Lapangan">▾</button>
+      </h2>
+      <div class="body">
+        <div><label>Tarikh &amp; masa</label><input type="datetime-local" id="fnDate"></div>
+        <div><label>Premis / lokasi</label><input id="fnPlace" placeholder="Nama &amp; alamat premis"></div>
+        <div><label>Nama pegawai (PDK)</label><input id="fnOfficer" placeholder="Nama penuh"></div>
+        <div><label>No. kad kuasa</label><input id="fnCard" placeholder="No. kad kuasa PDK (s.37)"></div>
+        <div class="fn-note">Nota ini adalah rekod kerja persendirian sahaja dan bukan borang yang diluluskan oleh MJMM/KKM.</div>
+      </div>
+    </div>
+
+    <div class="searchbar">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      <input id="search" placeholder="Cari penemuan… cth. 'PAT tamat', 'menghalang', 'rekod', 'palsu', 'pamer'">
+    </div>
+    <div class="filters" id="filters"></div>
+    <div class="counthint" id="countHint"></div>
+
+    <div id="findingList"></div>
+  </div>
+
+  <!-- RIGHT: report -->
+  <div class="side">
+    <div class="panel">
+      <h2>🧾 Penemuan Dipilih &amp; Verdik</h2>
+      <div class="body">
+        <div id="printHead">
+          <h2>Penilaian Kesalahan AJM 2011 — Nota Lapangan</h2>
+          <div class="pmeta" id="pmeta"></div>
+        </div>
+        <div class="summary-counts" id="counts" style="display:none">
+          <div class="scount sc-j"><div class="n" id="cJ">0</div><div class="l">Kesalahan AJM</div></div>
+          <div class="scount sc-e"><div class="n" id="cE">0</div><div class="l">Pelanggaran Etika</div></div>
+          <div class="scount sc-t"><div class="n" id="cT">0</div><div class="l">Perkara Tatatertib</div></div>
+          <div class="scount sc-l"><div class="n" id="cL">0</div><div class="l">Luar Skop Akta</div></div>
+        </div>
+        <div id="selList"><div class="empty">Belum ada penemuan dipilih.<br>Tandakan penemuan di sebelah untuk menjana verdik.</div></div>
+        <div class="actions">
+          <button class="btn btn-ghost" id="btnClear" disabled>Kosongkan</button>
+          <button class="btn btn-primary" id="btnPrint" disabled>Cetak / PDF</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="wrap" style="margin-top:22px">
+  <details class="ref">
+    <summary>📖 Rujukan pantas: penalti &amp; peruntukan kuasa PDK</summary>
+    <div class="inner">
+      <p><b>Jadual penalti utama (Akta 727):</b></p>
+      <table>
+        <tr><th>Seksyen</th><th>Kesalahan</th><th>Penalti (kesalahan pertama)</th><th>Kesalahan berikutnya</th></tr>
+        <tr><td>s.26(2)</td><td>Gagal menyerahkan perakuan pendaftaran &amp; PAT selepas gantung/potong (dalam 14 hari)</td><td>Denda ≤ RM20,000 / penjara ≤ 1 tahun / kedua-duanya</td><td>—</td></tr>
+        <tr><td>s.31</td><td>Mengeluarkan/memperakukan keputusan analisis makanan tanpa menjadi JM berdaftar &amp; tanpa PAT sah</td><td>Denda ≤ RM50,000 / penjara ≤ 3 tahun / kedua-duanya</td><td>Denda ≤ RM100,000 / penjara ≤ 5 tahun / kedua-duanya</td></tr>
+        <tr><td>s.32(1)</td><td>JM berdaftar menjalankan amalan tanpa PAT</td><td>Denda ≤ RM20,000 / penjara ≤ 2 tahun / kedua-duanya</td><td>Denda ≤ RM40,000 / penjara ≤ 4 tahun / kedua-duanya</td></tr>
+        <tr><td>s.32(2)</td><td>Berkongsi dengan / mengambil khidmat orang yang beramal tanpa PAT sah</td><td>Denda ≤ RM50,000 / penjara ≤ 3 tahun / kedua-duanya</td><td>Denda ≤ RM100,000 / penjara ≤ 5 tahun / kedua-duanya; +RM500/hari jika berterusan</td></tr>
+        <tr><td>s.33</td><td>Pendaftaran secara fraud / representasi palsu</td><td>Denda ≤ RM100,000 / penjara ≤ 5 tahun / kedua-duanya</td><td>—</td></tr>
+        <tr><td>s.34</td><td>Menyamar / mengemukakan diri sebagai JM berdaftar</td><td>Denda ≤ RM20,000 / penjara ≤ 2 tahun / kedua-duanya</td><td>Denda ≤ RM50,000 / penjara ≤ 3 tahun / kedua-duanya</td></tr>
+        <tr><td>s.35</td><td>Penalti am (kesalahan tanpa penalti khusus — cth. s.22(2), s.38(2))</td><td>Denda ≤ RM10,000 / penjara ≤ 1 tahun / kedua-duanya</td><td>—</td></tr>
+      </table>
+      <p style="margin-top:12px"><b>Kuasa &amp; tatacara PDK:</b></p>
+      <ul style="margin:4px 0;padding-left:18px">
+        <li><b>s.37</b> — Pelantikan PDK &amp; kad kuasa (keterangan prima facie).</li>
+        <li><b>s.38</b> — Kuasa memasuki premis, memeriksa &amp; menyita dokumen/radas/barang; kemukakan kad kuasa apabila diminta; <b>s.38(3)</b> beri penerimaan (resit) bagi barang yang disita.</li>
+        <li><b>s.39</b> — Capaian kepada data berkomputer (kata laluan, kod nyahsulit, dll.).</li>
+        <li><b>s.40</b> — Menghendaki kehadiran orang yang ada pengetahuan tentang kes (keengganan boleh dilaporkan kepada Majistret untuk saman).</li>
+        <li><b>s.41</b> — Pemeriksaan lisan; orang terikat menyatakan yang benar (boleh enggan jawab soalan yang mendedah diri kepada pertuduhan).</li>
+        <li><b>s.43</b> — Pengkompaunan: Ketua Pengarah (dengan keizinan Pendakwa Raya) boleh menawarkan kompaun, amaun ≤ 50% denda maksimum, bagi kesalahan yang ditetapkan boleh kompaun.</li>
+        <li><b>s.44</b> — Pendakwaan hanya oleh / dengan keizinan Pendakwa Raya.</li>
+      </ul>
+      <p style="margin-top:10px;font-size:11.5px;color:var(--mute)">Semua angka di atas ialah had <i>maksimum</i> seperti diperuntukkan dalam teks Akta yang dimuat naik. Sahkan dengan versi warta/pindaan terkini sebelum digunakan.</p>
+    </div>
+  </details>
+</div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div><b>Sumber rujukan:</b> Akta Juruanalisis Makanan 2011 (Akta 727); Peraturan-Peraturan Juruanalisis Makanan 2013 [P.U. (A) 93]; Garis Panduan Kelakuan dan Etika Profesional Juruanalisis Makanan Berdaftar (MJMM, disemak 16 Mei 2024).</div>
+    <div>Pengesahan teks perundangan: portal BKKM/KKM — <a href="https://hq.moh.gov.my/fsq/akta-juruanalisis-makanan-2011">hq.moh.gov.my/fsq</a> dan Pejabat Peguam Negara (AGC).</div>
+    <div style="color:var(--mute)">Alat ini menyokong peranan PDK; ia tidak memberikan kuasa tambahan dan tidak mengesahkan bahawa sesuatu kesalahan telah dilakukan. Keputusan muktamad terletak pada pihak berkuasa yang kompeten / mahkamah.</div>
+    <div class="credit">Ts. Amira ZE &copy; 2026</div>
+  </div>
+</footer>
+
+<script>
+// ---------- DATA: setiap penemuan dipetakan dengan teliti kepada peruntukan ----------
+// verdict: jenayah | etika | tatatertib | luar | kuasa
+const VLABEL = {
+  jenayah:  {t:"Kesalahan AJM", c:"v-jenayah"},
+  etika:    {t:"Pelanggaran Etika (s.22)", c:"v-etika"},
+  tatatertib:{t:"Perkara Tatatertib", c:"v-tatatertib"},
+  luar:     {t:"Luar Skop Akta 727", c:"v-luar"},
+  kuasa:    {t:"Kuasa / Tatacara PDK", c:"v-kuasa"}
+};
+const S35 = "Penalti am (s.35): denda ≤ RM10,000 / penjara ≤ 1 tahun / kedua-duanya.";
+const ETIKA_PEN = "Ketidakpatuhan garis panduan = kesalahan di bawah s.22(2) → penalti am s.35 (denda ≤ RM10,000 / penjara ≤ 1 tahun / kedua-duanya); dan/atau tindakan tatatertib (s.23 → hukuman s.25).";
+const ETIKA_DEC = "Pendakwaan (keizinan Pendakwa Raya, s.44) dan/atau Majlis Juruanalisis Makanan (tatatertib).";
+const TATA_PEN = "Tiada penalti jenayah khusus dalam peruntukan ini. Asas tindakan tatatertib di bawah s.23 → hukuman s.25 (celaan bertulis / gantung / potong nama dari Daftar).";
+const TATA_DEC = "Majlis Juruanalisis Makanan Malaysia / Jawatankuasa Tatatertib.";
+
+const DATA = [
+{cat:"Pendaftaran & Perakuan Amalan Tahunan (PAT)", items:[
+  {id:"p1", v:"jenayah", mini:"s.31",
+   label:"Seseorang mengeluarkan / memperakukan secara bertulis keputusan analisis makanan tanpa menjadi JM berdaftar DAN tanpa PAT sah",
+   kw:"laporan analisis perakuan keputusan tidak berdaftar tanpa pat komposisi spesifikasi",
+   prov:[{r:"Akta s.31(1),(2)", d:"Hanya JM berdaftar yang mempunyai PAT sah boleh mengeluarkan/memperakukan keputusan analisis makanan bagi menentukan komposisi/spesifikasi bahan atau produk untuk orang awam."}],
+   pen:"Kesalahan pertama: denda ≤ RM50,000 / penjara ≤ 3 tahun / kedua-duanya. Kesalahan berikutnya: denda ≤ RM100,000 / penjara ≤ 5 tahun / kedua-duanya.",
+   dec:"Pendakwaan dengan keizinan Pendakwa Raya (s.44).",
+   ver:"Sahkan: (a) kandungan 'laporan' benar-benar keputusan analisis makanan untuk orang awam; (b) status pendaftaran &amp; PAT orang itu melalui Pendaftar/MJMM (perakuan Pendaftar = keterangan muktamad, s.17(4)/s.20(3)); (c) sama ada terpakai pengecualian Menteri (s.46)."},
+  {id:"p2", v:"jenayah", mini:"s.32(1)",
+   label:"JM berdaftar menjalankan amalan analisis makanan tetapi PAT telah tamat tempoh / tiada PAT",
+   kw:"pat tamat tempoh luput amalan tanpa perakuan amalan tahunan berdaftar",
+   prov:[{r:"Akta s.32(1)", d:"JM berdaftar yang menjalankan amalan tanpa PAT melakukan kesalahan."}],
+   pen:"Kesalahan pertama: denda ≤ RM20,000 / penjara ≤ 2 tahun / kedua-duanya. Kesalahan berikutnya: denda ≤ RM40,000 / penjara ≤ 4 tahun / kedua-duanya.",
+   dec:"Pendakwaan dengan keizinan Pendakwa Raya (s.44).",
+   ver:"Sahkan tarikh luput PAT dengan Pendaftar. Bezakan 'berdaftar tetapi PAT luput' (s.32) daripada 'tidak berdaftar langsung' (s.31/s.34)."},
+  {id:"p3", v:"jenayah", mini:"s.32(2)(a)",
+   label:"Firma/individu berkongsi (perkongsian) dengan orang yang menganalisis makanan tanpa PAT sah",
+   kw:"perkongsian partnership berkongsi tanpa pat majikan firma",
+   prov:[{r:"Akta s.32(2)(a)", d:"Menjalankan perkongsian dengan seseorang yang beramal menganalisis makanan tanpa PAT sah."}],
+   pen:"Kesalahan pertama: denda ≤ RM50,000 / penjara ≤ 3 tahun / kedua-duanya. Berikutnya: ≤ RM100,000 / ≤ 5 tahun. Kesalahan berterusan: +RM500 bagi setiap hari selepas sabitan.",
+   dec:"Pendakwaan (s.44).",
+   ver:"Pembelaan s.32(3): tidak melakukan kesalahan jika dibuktikan tanpa pengetahuan, persetujuan atau pembiaran."},
+  {id:"p4", v:"jenayah", mini:"s.32(2)(b)",
+   label:"Majikan mengambil khidmat orang yang menganalisis makanan tanpa PAT sah",
+   kw:"mengambil khidmat pekerja majikan tanpa pat gaji",
+   prov:[{r:"Akta s.32(2)(b)", d:"Mengambil khidmat seseorang yang beramal menganalisis makanan tanpa PAT sah."}],
+   pen:"Kesalahan pertama: denda ≤ RM50,000 / penjara ≤ 3 tahun / kedua-duanya. Berikutnya: ≤ RM100,000 / ≤ 5 tahun. Berterusan: +RM500/hari selepas sabitan.",
+   dec:"Pendakwaan (s.44).",
+   ver:"Pembelaan s.32(3) terpakai (tanpa pengetahuan/persetujuan/pembiaran)."},
+  {id:"p5", v:"tatatertib", mini:"Per.9(1)",
+   label:"PAT tidak dipamerkan di bahagian premis yang mudah dilihat",
+   kw:"pamer perakuan amalan tahunan premis mudah dilihat tidak dipamerkan display",
+   prov:[{r:"Peraturan 9(1)", d:"Pemegang PAT hendaklah menyebabkan perakuan itu dipamerkan pada sepanjang masa di suatu bahagian yang mudah dilihat di premis yang dinyatakan."}],
+   pen:TATA_PEN, dec:TATA_DEC,
+   ver:"Peraturan 9 tidak memperuntukkan penalti jenayah khusus. Kegagalan mematuhi boleh menjadi asas tatatertib di bawah s.23(2)(e) (melanggar peraturan). Rekodkan lokasi pemeriksaan &amp; ambil gambar sebagai keterangan."},
+  {id:"p6", v:"jenayah", mini:"s.26(2)",
+   label:"Orang yang namanya digantung/dipotong gagal menyerahkan perakuan pendaftaran & PAT dalam 14 hari",
+   kw:"gantung potong nama daftar serah perakuan 14 hari gagal",
+   prov:[{r:"Akta s.26(1),(2)", d:"Perakuan pendaftaran &amp; PAT hendaklah diserahkan kepada Pendaftar dalam 14 hari dari penerimaan perintah gantung/potong; kegagalan ialah kesalahan."}],
+   pen:"Denda ≤ RM20,000 / penjara ≤ 1 tahun / kedua-duanya.",
+   dec:"Pendakwaan (s.44).",
+   ver:"Sahkan tarikh perintah Majlis diterima dan kiraan tempoh 14 hari."}
+]},
+{cat:"Penyamaran & Representasi Palsu", items:[
+  {id:"s1", v:"jenayah", mini:"s.34(a)",
+   label:"Orang tidak berdaftar menyamar sebagai JM berdaftar",
+   kw:"menyamar samar tidak berdaftar juruanalisis gelaran",
+   prov:[{r:"Akta s.34(a)", d:"Orang tidak berdaftar yang menyamar sebagai JM berdaftar melakukan kesalahan."}],
+   pen:"Kesalahan pertama: denda ≤ RM20,000 / penjara ≤ 2 tahun / kedua-duanya. Berikutnya: denda ≤ RM50,000 / penjara ≤ 3 tahun / kedua-duanya.",
+   dec:"Pendakwaan (s.44).",
+   ver:"Kumpul keterangan penyamaran (kad nama, gelaran digunakan, kenyataan lisan/bertulis)."},
+  {id:"s2", v:"jenayah", mini:"s.34(b)",
+   label:"Orang tidak berdaftar mengiklan / mengemukakan diri sebagai berkelayakan atau diberi kuasa menganalisis makanan",
+   kw:"iklan pengiklanan kemukakan diri berkelayakan diberi kuasa tidak berdaftar",
+   prov:[{r:"Akta s.34(b)", d:"Mengemukakan diri melalui pengiklanan atau selainnya sebagai orang berkelayakan/diberi kuasa menjalankan amalan menganalisis makanan."}],
+   pen:"Kesalahan pertama: denda ≤ RM20,000 / penjara ≤ 2 tahun / kedua-duanya. Berikutnya: denda ≤ RM50,000 / penjara ≤ 3 tahun / kedua-duanya.",
+   dec:"Pendakwaan (s.44).",
+   ver:"Simpan salinan iklan/risalah/laman web sebagai keterangan berserta tarikh &amp; sumber."},
+  {id:"s3", v:"jenayah", mini:"s.33",
+   label:"Pendaftaran diperoleh / cuba diperoleh melalui representasi atau pengisytiharan palsu / fraud",
+   kw:"fraud palsu pendaftaran representasi pengisytiharan cuba daftar",
+   prov:[{r:"Akta s.33", d:"Berdaftar / cuba mendaftar diri atau orang lain dengan representasi atau pengisytiharan palsu/fraud (lisan atau bertulis)."}],
+   pen:"Denda ≤ RM100,000 / penjara ≤ 5 tahun / kedua-duanya.",
+   dec:"Pendakwaan (s.44).",
+   ver:"Juga asas tatatertib: s.23(2)(a) (pendaftaran diperoleh secara fraud/salah nyataan). Dapatkan dokumen permohonan asal daripada Pendaftar."}
+]},
+{cat:"Halangan Terhadap Pegawai Diberi Kuasa (serbuan/pemeriksaan)", items:[
+  {id:"h1", v:"jenayah", mini:"s.38(2)(a)",
+   label:"Mengugut atau menghalang PDK dalam melaksanakan tugasnya",
+   kw:"ugut halang menghalang pegawai diberi kuasa serbuan obstruct ancam",
+   prov:[{r:"Akta s.38(2)(a)", d:"Mengugut atau menghalang PDK dalam melaksanakan kewajipannya ialah kesalahan."}],
+   pen:S35, dec:"Pendakwaan (s.44).",
+   ver:"Rekodkan perlakuan dengan tepat (kata-kata/tindakan), masa, saksi. PDK hendaklah mengemukakan kad kuasa apabila diminta (s.38(4))."},
+  {id:"h2", v:"jenayah", mini:"s.38(2)(b)",
+   label:"Enggan membenarkan PDK memeriksa dokumen / radas / barang",
+   kw:"enggan benarkan periksa dokumen radas barang halang",
+   prov:[{r:"Akta s.38(2)(b)", d:"Enggan membenarkan PDK memeriksa apa-apa dokumen, radas atau barang."}],
+   pen:S35, dec:"Pendakwaan (s.44).", ver:"Catat butiran item yang enggan diberikan untuk pemeriksaan."},
+  {id:"h3", v:"jenayah", mini:"s.38(2)(c)",
+   label:"Enggan mengemukakan dokumen / radas / barang untuk diperiksa",
+   kw:"enggan kemukakan dokumen radas barang rekod periksa",
+   prov:[{r:"Akta s.38(2)(c)", d:"Enggan mengemukakan apa-apa dokumen, radas atau barang untuk diperiksa oleh PDK."}],
+   pen:S35, dec:"Pendakwaan (s.44).",
+   ver:"Bertindih dengan Peraturan 11(2) (kewajipan mengemukakan rekod kepada PDK apabila diminta)."},
+  {id:"h4", v:"jenayah", mini:"s.38(2)(d)",
+   label:"Enggan menyerahkan dokumen / radas / barang kepada PDK",
+   kw:"enggan serah dokumen radas barang sita",
+   prov:[{r:"Akta s.38(2)(d)", d:"Enggan menyerahkan apa-apa dokumen, radas atau barang kepada PDK."}],
+   pen:S35, dec:"Pendakwaan (s.44).",
+   ver:"Jika penyitaan wajar di sisi undang-undang, ikut s.38(1)(b) &amp; beri penerimaan bertandatangan (s.38(3))."},
+  {id:"h5", v:"jenayah", mini:"s.38(2)(e)",
+   label:"Enggan memberikan maklumat yang dikehendaki oleh PDK",
+   kw:"enggan beri maklumat pdk kehendaki",
+   prov:[{r:"Akta s.38(2)(e)", d:"Enggan memberikan apa-apa maklumat yang dikehendaki oleh PDK."}],
+   pen:S35, dec:"Pendakwaan (s.44).", ver:"Catat maklumat spesifik yang diminta dan keengganan yang berlaku."},
+  {id:"h6", v:"jenayah", mini:"s.39 / s.38(2)",
+   label:"Enggan memberi capaian kepada data berkomputer (kata laluan / kod nyahsulit)",
+   kw:"data komputer kata laluan password kod nyahsulit capaian enggan",
+   prov:[{r:"Akta s.39", d:"PDK yang menjalankan penggeledahan hendaklah diberi capaian kepada data berkomputer (termasuk kata laluan, kod penyulitan/nyahsulit, perisian/perkakasan)."},
+         {r:"Akta s.38(2)(b)/(e)", d:"Keengganan membenarkan pemeriksaan atau memberikan maklumat yang dikehendaki PDK ialah kesalahan."}],
+   pen:"Keengganan memberi capaian dinilai sebagai halangan di bawah s.38(2)(b)/(e) → kesalahan; penalti am s.35: denda ≤ RM10,000 / penjara ≤ 1 tahun / kedua-duanya.",
+   dec:"Pendakwaan (s.44).",
+   ver:"Rekodkan permintaan capaian secara khusus &amp; keengganan; petakan kepada peruntukan halangan s.38(2) yang berkenaan."},
+  {id:"i4", v:"jenayah", mini:"Per.11(2) + s.38(2)(c)",
+   label:"Enggan mengemukakan rekod analisis kepada PDK apabila diminta",
+   kw:"enggan kemukakan rekod pemeriksaan pdk diminta peraturan 11",
+   prov:[{r:"Peraturan 11(2)", d:"Pemegang PAT hendaklah mengemukakan rekod/dokumen berhubungan analisis makanan kepada PDK apabila diminta bagi maksud pemeriksaan."},
+         {r:"Akta s.38(2)(c)", d:"Enggan mengemukakan dokumen untuk diperiksa oleh PDK ialah kesalahan."}],
+   pen:S35+" (melalui s.38(2)(c)); kewajipan mengemukakan di bawah Per.11(2).",
+   dec:"Pendakwaan (s.44) dan/atau tatatertib.",
+   ver:"Keengganan di lapangan paling kukuh dipetakan kepada s.38(2)(c). Catat permintaan &amp; keengganan."}
+]},
+{cat:"Peraturan-Peraturan 2013 — Rekod & Skop Amalan (Tatatertib)", items:[
+  {id:"i3", v:"tatatertib", mini:"Per.11(1)",
+   label:"Tidak menyimpan / menyenggara rekod analisis selama tempoh tidak kurang 5 tahun",
+   kw:"rekod simpan senggara lima tahun 5 tahun penyenggaraan",
+   prov:[{r:"Peraturan 11(1)", d:"Pemegang PAT hendaklah menyimpan/menyenggara rekod analisis bagi tempoh tidak kurang daripada 5 tahun."}],
+   pen:TATA_PEN, dec:TATA_DEC, ver:"Rekodkan jenis rekod yang tiada dan tempoh yang terlibat."},
+  {id:"k6", v:"tatatertib", mini:"Per.10",
+   label:"JM berdaftar menjalankan amalan dalam bidang SELAIN bidang analisis yang diluluskan (yang dinyatakan dalam perakuan)",
+   kw:"bidang selain diluluskan skop perakuan amalan luar bidang",
+   prov:[{r:"Peraturan 10", d:"JM berdaftar yang menjalankan amalan dalam bidang selain bidang analisis makanan yang diluluskan Majlis (dinyatakan dalam perakuan pendaftaran &amp; PAT) boleh dikenakan tindakan tatatertib."}],
+   pen:"Peraturan 10 menyatakan secara jelas 'boleh dikenakan dengan tindakan tatatertib' → hukuman s.25.",
+   dec:TATA_DEC,
+   ver:"Sahkan bidang diluluskan dalam perakuan pendaftaran/PAT berbanding kerja sebenar yang dijalankan."}
+]},
+{cat:"Garis Panduan 3.0 — Etika Am", fam:"etika", items:[
+  {id:"e31", v:"etika", mini:"Etika 3.1",
+   label:"Tidak menjaga kelakuan sehingga menjejaskan maruah, taraf atau reputasi profesion",
+   kw:"kelakuan maruah taraf reputasi profesion etika am",
+   prov:[{r:"Garis Panduan Etika 3.1", d:"JM berdaftar hendaklah menjaga kelakuan demi memartabatkan maruah, taraf dan reputasi profesion."},
+         {r:"Akta s.22", d:"Ketidakpatuhan garis panduan = kesalahan."}],
+   pen:ETIKA_PEN, dec:ETIKA_DEC, ver:"Nyatakan perlakuan khusus dan kaitannya dengan maruah/reputasi profesion."},
+  {id:"e32", v:"etika", mini:"Etika 3.2",
+   label:"Tidak mengutamakan kepentingan awam ketika menjalankan tugas",
+   kw:"kepentingan awam utama tugas etika am",
+   prov:[{r:"Garis Panduan Etika 3.2", d:"JM berdaftar perlu mengutamakan kepentingan awam ketika menjalankan tugasnya."},
+         {r:"Akta s.22", d:"Ketidakpatuhan garis panduan = kesalahan."}],
+   pen:ETIKA_PEN, dec:ETIKA_DEC, ver:"Tentukan bagaimana tindakan itu mengetepikan kepentingan awam."},
+  {id:"e33", v:"etika", mini:"Etika 3.3",
+   label:"Terlibat dengan perbuatan jenayah atau perbuatan yang menyalahi undang-undang negara",
+   kw:"jenayah menyalahi undang-undang etika am terlibat",
+   prov:[{r:"Garis Panduan Etika 3.3", d:"JM berdaftar hendaklah mengelakkan diri daripada terlibat dengan sebarang perbuatan jenayah dan menyalahi undang-undang negara."},
+         {r:"Akta s.22", d:"Ketidakpatuhan garis panduan = kesalahan."}],
+   pen:ETIKA_PEN, dec:ETIKA_DEC, ver:"Perbuatan jenayah itu sendiri dikawal undang-undang berkaitan (bukan Akta 727). Sabitan kesalahan yang melibatkan fraud/kecurangan/keburukan akhlak juga asas tatatertib s.23(2)(c)."}
+]},
+{cat:"Garis Panduan 4.0 — Etika Profesional", fam:"etika", items:[
+  {id:"e41", v:"etika", mini:"Etika 4.1",
+   label:"Tidak mengekalkan standard analisis makanan dan tahap kompetensi / profesionalisme yang tinggi",
+   kw:"standard kompetensi profesionalisme kualiti perkhidmatan etika profesional",
+   prov:[{r:"Garis Panduan Etika 4.1", d:"JM berdaftar hendaklah sentiasa mengekalkan standard analisis makanan dan tahap kompetensi serta profesionalisme yang tinggi dalam menjalankan tugas bagi menjaga kualiti perkhidmatan."},
+         {r:"Akta s.22", d:"Ketidakpatuhan garis panduan = kesalahan."}],
+   pen:ETIKA_PEN, dec:ETIKA_DEC, ver:"Nilai berdasarkan standard &amp; kompetensi amalan; bezakan daripada kriteria akreditasi/ISO yang bukan kehendak statutori AJM."},
+  {id:"e42a", v:"etika", mini:"Etika 4.2(a)",
+   label:"Mendapatkan / menggunakan maklumat sulit analisis atau data pelanggan untuk tujuan di luar skop tanggungjawab",
+   kw:"maklumat sulit data pelanggan guna tujuan lain kerahsiaan",
+   prov:[{r:"Garis Panduan Etika 4.2(a)", d:"Tidak boleh mendapatkan/menggunakan maklumat sulit analisis atau data pelanggan untuk tujuan lain dari skop tanggungjawab."},
+         {r:"Akta s.22", d:"Ketidakpatuhan garis panduan = kesalahan."}],
+   pen:ETIKA_PEN, dec:ETIKA_DEC, ver:"Tentukan maklumat terlibat &amp; tujuan penggunaan."},
+  {id:"e42b", v:"etika", mini:"Etika 4.2(b)",
+   label:"Menggunakan kemudahan makmal untuk kepentingan lain / aktiviti tidak berkaitan analisis makanan tanpa kebenaran majikan",
+   kw:"kemudahan makmal kepentingan lain aktiviti tidak berkaitan kebenaran majikan",
+   prov:[{r:"Garis Panduan Etika 4.2(b)", d:"Tidak boleh menjalankan aktiviti tidak berkaitan analisis makanan atau menggunakan kemudahan makmal untuk kepentingan lain melainkan dengan kebenaran majikan."},
+         {r:"Akta s.22", d:"Ketidakpatuhan garis panduan = kesalahan."}],
+   pen:ETIKA_PEN, dec:ETIKA_DEC, ver:"Semak ada/tiada kebenaran majikan."},
+  {id:"e42c", v:"etika", mini:"Etika 4.2(c)",
+   label:"Menjalankan pekerjaan lain sehingga menjejaskan prestasi dalam menjalankan analisis makanan",
+   kw:"pekerjaan lain prestasi jejas sambilan",
+   prov:[{r:"Garis Panduan Etika 4.2(c)", d:"Tidak boleh menjalankan pekerjaan lain sehingga menjejaskan prestasi analisis makanan."},
+         {r:"Akta s.22", d:"Ketidakpatuhan garis panduan = kesalahan."}],
+   pen:ETIKA_PEN, dec:ETIKA_DEC, ver:"Perlu keterangan kesan ke atas prestasi."},
+  {id:"e42d", v:"etika", mini:"Etika 4.2(d)",
+   label:"Mendapatkan keuntungan peribadi daripada pembekal yang berurusan dengan makmal, yang boleh mempengaruhi keputusan analisis",
+   kw:"keuntungan pembekal rasuah pengaruh keputusan analisis konflik",
+   prov:[{r:"Garis Panduan Etika 4.2(d)", d:"Tidak boleh mendapatkan keuntungan peribadi daripada individu/syarikat pembekal yang boleh mempengaruhi keputusan analisis."},
+         {r:"Akta s.22", d:"Ketidakpatuhan garis panduan = kesalahan."}],
+   pen:ETIKA_PEN+" Jika melibatkan unsur rasuah, rujuk SPRM / undang-undang berkaitan (bukan Akta 727).", dec:ETIKA_DEC,
+   ver:"Jika terdapat unsur suapan/rasuah, ini di luar skop AJM — rujuk pihak berkuasa yang berkenaan."},
+  {id:"e42e", v:"etika", mini:"Etika 4.2(e)",
+   label:"Memalsukan rekod / laporan analisis atau membuat kenyataan palsu",
+   kw:"palsu memalsukan rekod laporan kenyataan integriti fabrikasi",
+   prov:[{r:"Garis Panduan Etika 4.2(e)", d:"JM berdaftar tidak boleh memalsukan rekod dan laporan analisis serta membuat kenyataan palsu."},
+         {r:"Akta s.22", d:"Ketidakpatuhan garis panduan yang dikeluarkan Majlis ialah kesalahan."}],
+   pen:ETIKA_PEN, dec:ETIKA_DEC,
+   ver:"Pemalsuan boleh juga menyentuh peruntukan undang-undang lain (cth. Kanun Keseksaan) — rujuk penasihat undang-undang. Dalam rangka AJM, petakan kepada s.22 &amp; tatatertib s.23(2)(f)."},
+  {id:"e42f", v:"etika", mini:"Etika 4.2(f)",
+   label:"Menyalin keputusan analisis makmal/industri/institusi lain & mengeluarkannya tanpa maklumat kebolehkesanan / penafian",
+   kw:"salin keputusan makmal lain kebolehkesanan penafian disclaimer plagiat",
+   prov:[{r:"Garis Panduan Etika 4.2(f)", d:"Tidak boleh menyalin keputusan analisis makmal lain dan mengeluarkan/memperakukannya kepada pelanggan tanpa maklumat kebolehkesanan/penafian."},
+         {r:"Akta s.22", d:"Ketidakpatuhan garis panduan = kesalahan."}],
+   pen:ETIKA_PEN, dec:ETIKA_DEC, ver:"Dapatkan laporan yang dikeluarkan &amp; bandingkan dengan sumber asal."}
+]},
+{cat:"Garis Panduan 5.0 — Etika dengan Majikan", fam:"etika", items:[
+  {id:"e51", v:"etika", mini:"Etika 5.1",
+   label:"Menerima imbuhan / ganjaran untuk perkhidmatan selain daripada majikan tanpa persetujuan majikan",
+   kw:"imbuhan ganjaran majikan persetujuan terima bayaran jujur",
+   prov:[{r:"Garis Panduan Etika 5.1", d:"Hendaklah jujur kepada majikan dan tidak menerima imbuhan/ganjaran selain daripada majikan atau tanpa persetujuan majikan."},
+         {r:"Akta s.22", d:"Ketidakpatuhan garis panduan = kesalahan."}],
+   pen:ETIKA_PEN, dec:ETIKA_DEC, ver:"Dokumenkan sumber &amp; bentuk imbuhan."},
+  {id:"e52", v:"etika", mini:"Etika 5.2",
+   label:"Menjalankan analisis makanan untuk pelanggan tanpa pengetahuan majikan bagi keuntungan peribadi",
+   kw:"keuntungan peribadi tanpa pengetahuan majikan pelanggan sampingan",
+   prov:[{r:"Garis Panduan Etika 5.2", d:"Tidak boleh menjalankan analisis makanan untuk pelanggan tanpa pengetahuan majikan bagi mengaut keuntungan peribadi."},
+         {r:"Akta s.22", d:"Ketidakpatuhan garis panduan = kesalahan."}],
+   pen:ETIKA_PEN, dec:ETIKA_DEC, ver:"Kenal pasti transaksi/pelanggan &amp; status pengetahuan majikan."}
+]},
+{cat:"Garis Panduan 6.0 — Etika dengan Juruanalisis Makanan Lain", fam:"etika", items:[
+  {id:"e61a", v:"etika", mini:"Etika 6.1(a)",
+   label:"Merendahkan / memperkecilkan integriti, penilaian atau kemahiran JM lain (lisan atau perbuatan)",
+   kw:"rendah perkecil integriti juruanalisis lain kemahiran fitnah",
+   prov:[{r:"Garis Panduan Etika 6.1(a)", d:"Tidak boleh, secara lisan atau perbuatan, merendahkan atau memperkecilkan integriti, penilaian ataupun kemahiran JM lain."},
+         {r:"Akta s.22", d:"Ketidakpatuhan garis panduan = kesalahan."}],
+   pen:ETIKA_PEN, dec:ETIKA_DEC, ver:"Kumpul keterangan kenyataan/perbuatan."},
+  {id:"e61b", v:"etika", mini:"Etika 6.1(b)",
+   label:"Melakukan perkara yang menjejaskan secara langsung atau tidak langsung reputasi, prospek atau tugas JM lain",
+   kw:"jejas reputasi prospek tugas juruanalisis lain",
+   prov:[{r:"Garis Panduan Etika 6.1(b)", d:"Tidak boleh melakukan perkara yang boleh menjejaskan secara langsung atau tidak langsung reputasi, prospek atau tugas JM yang lain."},
+         {r:"Akta s.22", d:"Ketidakpatuhan garis panduan = kesalahan."}],
+   pen:ETIKA_PEN, dec:ETIKA_DEC, ver:"Nyatakan perbuatan &amp; kesannya ke atas JM lain."},
+  {id:"e61c", v:"etika", mini:"Etika 6.1(c)",
+   label:"Mempertikai / mencampuri amalan atau mengambil alih tugas JM lain tanpa kebenaran",
+   kw:"campur ambil alih tugas juruanalisis lain tanpa kebenaran pertikai",
+   prov:[{r:"Garis Panduan Etika 6.1(c)", d:"Tidak boleh mempertikai/mencampuri amalan atau mengambil alih tugas JM lain kecuali dengan kebenaran JM itu sendiri atau dimaklumkan majikan bahawa tugas itu bukan lagi tanggungjawab JM tersebut."},
+         {r:"Akta s.22", d:"Ketidakpatuhan garis panduan = kesalahan."}],
+   pen:ETIKA_PEN, dec:ETIKA_DEC, ver:"Semak kewujudan kebenaran/pemberitahuan majikan."}
+]},
+{cat:"Garis Panduan 7.0 — Etika dengan Pelanggan", fam:"etika", items:[
+  {id:"e71a", v:"etika", mini:"Etika 7.1(a)",
+   label:"Tidak memelihara kerahsiaan maklumat / rekod / keputusan analisis pelanggan (didedah tanpa kebenaran pelanggan atau arahan mahkamah)",
+   kw:"kerahsiaan dedah pelanggan rahsia keputusan mahkamah",
+   prov:[{r:"Garis Panduan Etika 7.1(a)", d:"Hendaklah memelihara kerahsiaan maklumat/rekod/keputusan analisis pelanggan dan hanya mendedahkannya dengan kebenaran pelanggan atau dengan arahan mahkamah."},
+         {r:"Akta s.22", d:"Ketidakpatuhan garis panduan = kesalahan."}],
+   pen:ETIKA_PEN, dec:ETIKA_DEC, ver:"Sahkan tiada kebenaran pelanggan / arahan mahkamah bagi pendedahan."},
+  {id:"e71b", v:"etika", mini:"Etika 7.1(b)",
+   label:"Tidak mengekalkan komunikasi yang baik / tidak memberi nasihat & panduan kepada pelanggan dalam hal berkaitan analisis makanan",
+   kw:"komunikasi nasihat panduan pelanggan analisis",
+   prov:[{r:"Garis Panduan Etika 7.1(b)", d:"Hendaklah mengekalkan komunikasi yang baik, memberi nasihat dan panduan kepada pelanggan dalam hal berkaitan analisis makanan."},
+         {r:"Akta s.22", d:"Ketidakpatuhan garis panduan = kesalahan."}],
+   pen:ETIKA_PEN, dec:ETIKA_DEC, ver:"Kehendak positif; nilai berdasarkan keadaan sebenar hubungan dengan pelanggan."}
+]},
+{cat:"Garis Panduan 8.0 — Gelaran & Pengiklanan", fam:"etika", items:[
+  {id:"e81", v:"etika", mini:"Etika 8.1",
+   label:"Menggunakan gelaran selain yang berhubung dengan kurniaan umum / kelulusan profesional / kelayakan akademik",
+   kw:"gelaran kurniaan kelulusan profesional akademik salah guna",
+   prov:[{r:"Garis Panduan Etika 8.1", d:"Tidak dibenarkan menggunakan gelaran selain yang berhubung dengan kurniaan umum/kelulusan profesional/kelayakan akademik."},
+         {r:"Akta s.22", d:"Ketidakpatuhan garis panduan = kesalahan."}],
+   pen:ETIKA_PEN, dec:ETIKA_DEC, ver:"Rekod gelaran yang digunakan &amp; asasnya."},
+  {id:"e82", v:"etika", mini:"Etika 8.2",
+   label:"Mengiklankan diri secara merendahkan JM lain / bertentangan kepentingan awam / menjatuhkan martabat profesion",
+   kw:"iklan pengiklanan rendah profesion kepentingan awam martabat",
+   prov:[{r:"Garis Panduan Etika 8.2", d:"Tidak boleh secara langsung atau tidak langsung mengiklankan diri dengan cara yang merendahkan JM lain, bertentangan dengan kepentingan awam serta menjatuhkan martabat profesion."},
+         {r:"Akta s.22", d:"Ketidakpatuhan garis panduan = kesalahan."}],
+   pen:ETIKA_PEN, dec:ETIKA_DEC, ver:"Simpan bahan iklan sebagai keterangan. (Bezakan daripada s.34(b) yang terpakai bagi orang TIDAK berdaftar.)"}
+]},
+{cat:"Garis Panduan 9.0 — Penyeliaan Staf & Makmal Lain", fam:"etika", items:[
+  {id:"e91", v:"etika", mini:"Etika 9.1",
+   label:"Staf di bawah seliaan tidak terlatih / tidak kompeten menjalankan analisis",
+   kw:"staf seliaan terlatih kompeten penyeliaan",
+   prov:[{r:"Garis Panduan Etika 9.1", d:"JM hendaklah memastikan staf di bawah seliaannya terlatih dan kompeten dalam menjalankan analisis."},
+         {r:"Akta s.22", d:"Ketidakpatuhan garis panduan = kesalahan."}],
+   pen:ETIKA_PEN, dec:ETIKA_DEC, ver:"Semak rekod latihan &amp; kompetensi staf."},
+  {id:"e92", v:"etika", mini:"Etika 9.2",
+   label:"Menyelia makmal lain tanpa hubungan rapat / lawatan berkala / laporan kerja",
+   kw:"selia makmal lain lawatan berkala laporan hubungan",
+   prov:[{r:"Garis Panduan Etika 9.2", d:"JM yang menyelia makmal lain selain makmal utamanya hendaklah mengekalkan hubungan rapat, membuat lawatan secara berkala dan menyediakan laporan kerja yang dijalankan."},
+         {r:"Akta s.22", d:"Ketidakpatuhan garis panduan = kesalahan."}],
+   pen:ETIKA_PEN, dec:ETIKA_DEC, ver:"Semak rekod lawatan &amp; laporan."}
+]},
+{cat:"Garis Panduan 10.0 — Pembangunan Profesion Berterusan", fam:"etika", items:[
+  {id:"e101", v:"etika", mini:"Etika 10.1",
+   label:"Tidak melibatkan diri dalam pembangunan profesion berterusan (CPD)",
+   kw:"cpd pembangunan profesion berterusan pembelajaran pengetahuan kemahiran",
+   prov:[{r:"Garis Panduan Etika 10.1", d:"JM berdaftar hendaklah meningkatkan pengetahuan dan kemahiran dalam bidang analisis makanan melalui pembelajaran berterusan bagi pembangunan profesion."},
+         {r:"Akta s.22", d:"Ketidakpatuhan garis panduan = kesalahan."}],
+   pen:ETIKA_PEN, dec:ETIKA_DEC, ver:"CPD ialah kehendak garis panduan; bezakan daripada kriteria akreditasi/ISO yang bukan kehendak statutori AJM."}
+]},
+{cat:"Liabiliti Pertubuhan Perbadanan", items:[
+  {id:"c1", v:"jenayah", mini:"s.36",
+   label:"Kesalahan dilakukan oleh syarikat / pertubuhan perbadanan (liabiliti pengarah, pengurus, setiausaha, pegawai)",
+   kw:"syarikat perbadanan pengarah pengurus setiausaha liabiliti corporate",
+   prov:[{r:"Akta s.36", d:"Jika pertubuhan perbadanan melakukan kesalahan, pengarah/pengurus/setiausaha/pegawai yang bertanggungjawab boleh dipertuduh; disifatkan melakukan kesalahan melainkan dibuktikan tanpa pengetahuan/persetujuan/pembiaran dan telah mengambil langkah berjaga-jaga munasabah."}],
+   pen:"Mengikut penalti kesalahan asas yang dilakukan oleh pertubuhan perbadanan itu.",
+   dec:"Pendakwaan (s.44).",
+   ver:"Kenal pasti kesalahan asas dahulu, kemudian individu yang bertanggungjawab atas pengurusan."}
+]},
+{cat:"Di Luar Skop Akta 727 — Semak Semula Sebelum Bertindak", items:[
+  {id:"x3", v:"luar", mini:"s.46 (pengecualian)",
+   label:"Analisis makanan untuk R&D / kawalan kualiti dalaman bagi kegunaan sendiri di institusi penyelidikan / IPT / industri",
+   kw:"r&d penyelidikan kawalan kualiti dalaman qc kegunaan sendiri pengecualian institusi",
+   prov:[{r:"Akta s.46", d:"Menteri boleh, melalui perintah dalam Warta, mengecualikan orang yang menjalankan R&D atau kawalan/jaminan kualiti dalaman bagi kegunaan sendiri daripada peruntukan Akta."}],
+   pen:"Mungkin dikecualikan — bergantung pada perintah pengecualian yang berkuat kuasa.",
+   dec:"Tiada kesalahan jika dilindungi perintah pengecualian s.46.",
+   ver:"Sahkan sama ada aktiviti itu benar-benar 'untuk kegunaan sendiri' &amp; dilindungi perintah pengecualian semasa sebelum mengambil tindakan."},
+  {id:"x4", v:"luar", mini:"Akta Ahli Kimia 1975",
+   label:"Orang yang menjalankan analisis ialah ahli kimia berdaftar di bawah Akta Ahli Kimia 1975",
+   kw:"ahli kimia berdaftar akta 158 ketidakpakaian",
+   prov:[{r:"Akta s.3", d:"Akta Juruanalisis Makanan 2011 tidak terpakai bagi ahli kimia yang didaftarkan di bawah Akta Ahli Kimia 1975 [Akta 158]."}],
+   pen:"Tiada di bawah Akta 727 (ketidakpakaian).",
+   dec:"Rujuk Akta Ahli Kimia 1975 / Institut Kimia Malaysia jika berkaitan.",
+   ver:"Sahkan status pendaftaran sebagai ahli kimia sebelum menyimpulkan ketidakpakaian."}
+]}
+];
+
+// ---------- STATE ----------
+const selected = new Set();
+let activeCat = "all";
+let query = "";
+
+// ---------- BUILD FILTERS ----------
+const filterEl = document.getElementById('filters');
+const cats = DATA.map(d=>d.cat);
+function chip(label,val){const b=document.createElement('button');b.className='chip'+(val===activeCat?' active':'');b.textContent=label;b.onclick=()=>{activeCat=val;render();};return b;}
+function buildFilters(){
+  filterEl.innerHTML='';
+  const defs=[
+    ['Semua','all'],
+    ['Pendaftaran & PAT','Pendaftaran & Perakuan Amalan Tahunan (PAT)'],
+    ['Penyamaran','Penyamaran & Representasi Palsu'],
+    ['Halangan PDK','Halangan Terhadap Pegawai Diberi Kuasa (serbuan/pemeriksaan)'],
+    ['Rekod & Skop (Peraturan)','Peraturan-Peraturan 2013 — Rekod & Skop Amalan (Tatatertib)'],
+    ['Etika (Garis Panduan)','etika-all'],
+    ['Syarikat','Liabiliti Pertubuhan Perbadanan'],
+    ['Luar Skop','Di Luar Skop Akta 727 — Semak Semula Sebelum Bertindak']
+  ];
+  defs.forEach(d=>filterEl.appendChild(chip(d[0],d[1])));
+}
+
+// ---------- RENDER FINDINGS ----------
+const listEl = document.getElementById('findingList');
+function matches(it){
+  if(activeCat!=="all") return true; // cat filter handled at group level
+  return true;
+}
+function qhit(it,catName){
+  if(!query) return true;
+  const hay=(it.label+' '+it.kw+' '+it.mini+' '+catName+' '+it.prov.map(p=>p.r+' '+p.d).join(' ')).toLowerCase();
+  return query.toLowerCase().split(/\s+/).every(t=>hay.includes(t));
+}
+function render(){
+  buildFilters();
+  listEl.innerHTML='';
+  let shown=0;
+  DATA.forEach(group=>{
+    if(activeCat==="etika-all"){ if(group.fam!=="etika") return; }
+    else if(activeCat!=="all" && group.cat!==activeCat) return;
+    const vis=group.items.filter(it=>qhit(it,group.cat));
+    if(!vis.length) return;
+    const ch=document.createElement('div');ch.className='cat-head';ch.textContent=group.cat;listEl.appendChild(ch);
+    vis.forEach(it=>{shown++;listEl.appendChild(card(it));});
+  });
+  if(shown===0){const e=document.createElement('div');e.className='empty';e.textContent='Tiada penemuan sepadan dengan carian.';listEl.appendChild(e);}
+  document.getElementById('countHint').textContent=`${shown} penemuan dipaparkan`+(query?` untuk "${query}"`:'')+'.';
+  renderSelected();
+}
+function card(it){
+  const d=document.createElement('div');
+  d.className='finding'+(selected.has(it.id)?' sel':'');
+  const vl=VLABEL[it.v];
+  d.innerHTML=`
+    <div class="f-head">
+      <div class="f-check"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>
+      <div class="f-main">
+        <div class="f-label">${it.label}</div>
+        <div class="f-badges">
+          <span class="vbadge ${vl.c}">${vl.t}</span>
+          <span class="ref-mini">${it.mini}</span>
+        </div>
+      </div>
+    </div>
+    <div class="expand">Butiran peruntukan ▾</div>
+    <div class="f-detail">
+      <div class="row"><span class="k">Peruntukan</span>
+        ${it.prov.map(p=>`<div class="prov"><b>${p.r}</b> — ${p.d}</div>`).join('')}
+      </div>
+      <div class="row"><span class="k">Penalti / Akibat</span>${it.pen}</div>
+      <div class="row"><span class="k">Pihak Membuat Keputusan</span>${it.dec}</div>
+      <div class="verify"><b>Perlu disahkan:</b> ${it.ver}</div>
+    </div>`;
+  const head=d.querySelector('.f-head');
+  head.onclick=()=>{toggle(it.id);};
+  const exp=d.querySelector('.expand');
+  exp.onclick=(e)=>{e.stopPropagation();d.classList.toggle('open');exp.textContent=d.classList.contains('open')?'Butiran peruntukan ▴':'Butiran peruntukan ▾';};
+  return d;
+}
+function toggle(id){selected.has(id)?selected.delete(id):selected.add(id);render();}
+
+// ---------- SELECTED / VERDICT ----------
+function findItem(id){for(const g of DATA)for(const it of g.items)if(it.id===id)return it;}
+function renderSelected(){
+  const box=document.getElementById('selList');
+  const counts={jenayah:0,etika:0,tatatertib:0,luar:0,kuasa:0};
+  const ids=[...selected];
+  document.getElementById('btnClear').disabled=!ids.length;
+  document.getElementById('btnPrint').disabled=!ids.length;
+  if(!ids.length){
+    box.innerHTML='<div class="empty">Belum ada penemuan dipilih.<br>Tandakan penemuan di sebelah untuk menjana verdik.</div>';
+    document.getElementById('counts').style.display='none';
+    return;
+  }
+  box.innerHTML='';
+  ids.forEach(id=>{
+    const it=findItem(id);counts[it.v]++;
+    const vl=VLABEL[it.v];
+    const el=document.createElement('div');el.className='sel-item';
+    el.innerHTML=`
+      <button class="si-remove" title="Buang">×</button>
+      <div class="si-label">${it.label}</div>
+      <span class="vbadge ${vl.c}">${vl.t}</span> <span class="ref-mini">${it.mini}</span>
+      ${it.prov.map(p=>`<div class="si-prov"><b>${p.r}</b> — ${p.d}</div>`).join('')}
+      <div class="si-pen"><b>Akibat:</b> ${it.pen}<br><b>Keputusan:</b> ${it.dec}</div>
+      <div class="si-pen" style="background:#E4EDF6"><b>Sahkan:</b> ${it.ver}</div>`;
+    el.querySelector('.si-remove').onclick=()=>{selected.delete(id);render();};
+    box.appendChild(el);
+  });
+  document.getElementById('counts').style.display='grid';
+  document.getElementById('cJ').textContent=counts.jenayah;
+  document.getElementById('cE').textContent=counts.etika;
+  document.getElementById('cT').textContent=counts.tatatertib;
+  document.getElementById('cL').textContent=counts.luar+counts.kuasa;
+}
+
+// ---------- ACTIONS ----------
+document.getElementById('search').addEventListener('input',e=>{query=e.target.value.trim();render();});
+document.getElementById('btnClear').onclick=()=>{selected.clear();render();};
+document.getElementById('btnReset').onclick=()=>{
+  const hasData = selected.size>0 || query ||
+    ['fnDate','fnPlace','fnOfficer','fnCard'].some(id=>document.getElementById(id).value.trim());
+  if(hasData && !confirm('Set semula keseluruhan alat? Semua penemuan dipilih, carian, tapisan dan nota lapangan akan dikosongkan.')) return;
+  selected.clear();
+  query=''; activeCat='all';
+  document.getElementById('search').value='';
+  ['fnDate','fnPlace','fnOfficer','fnCard'].forEach(id=>document.getElementById(id).value='');
+  render();
+  window.scrollTo({top:0,behavior:'smooth'});
+};
+document.getElementById('btnPrint').onclick=()=>{
+  const m=[];
+  const g=(id)=>document.getElementById(id).value.trim();
+  const fmtDT=(v)=>{if(!v)return'';const d=new Date(v);return isNaN(d)?v:d.toLocaleString('ms-MY',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});};
+  if(g('fnDate'))m.push('Tarikh/Masa: '+fmtDT(g('fnDate')));
+  if(g('fnPlace'))m.push('Premis: '+g('fnPlace'));
+  if(g('fnOfficer'))m.push('Pegawai (PDK): '+g('fnOfficer'));
+  if(g('fnCard'))m.push('No. Kad Kuasa: '+g('fnCard'));
+  m.push('Dijana: '+new Date().toLocaleString('ms-MY'));
+  document.getElementById('pmeta').innerHTML=m.join(' &nbsp;•&nbsp; ');
+  window.print();
+};
+
+// Lipat header tajuk
+document.getElementById('hCollapse').onclick=()=>{
+  document.querySelector('header.top').classList.toggle('collapsed');
+  setOffset(); setTimeout(setOffset,180);
+};
+// Lipat Nota Lapangan (freeze pane)
+document.getElementById('fnFold').onclick=()=>{
+  document.querySelector('.fieldnote').classList.toggle('folded');
+};
+// Freeze pane: offset dinamik supaya Nota Lapangan & panel verdik duduk di bawah penafian beku
+const fnPanel=document.querySelector('.fieldnote');
+const disc=document.querySelector('.disclaimer');
+const hdr=document.querySelector('header.top');
+function setOffset(){
+  const hH=Math.round(hdr.getBoundingClientRect().height);
+  const dH=Math.round(disc.getBoundingClientRect().height);
+  document.documentElement.style.setProperty('--header-h', hH+'px');
+  document.documentElement.style.setProperty('--stick', (hH+dH+8)+'px');
+}
+setOffset();
+window.addEventListener('resize',setOffset,{passive:true});
+// Bayang halus apabila header / penafian / Nota Lapangan "tersekat" di atas semasa menatal
+let ticking=false;
+window.addEventListener('scroll',()=>{
+  if(ticking)return;ticking=true;
+  requestAnimationFrame(()=>{
+    const headerH=parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-h'))||0;
+    const curTop=parseInt(getComputedStyle(fnPanel).top)||10;
+    fnPanel.classList.toggle('stuck', fnPanel.getBoundingClientRect().top<=curTop+1);
+    disc.classList.toggle('stuck', disc.getBoundingClientRect().top<=headerH+1);
+    hdr.classList.toggle('stuck', window.scrollY>2);
+    ticking=false;
+  });
+},{passive:true});
+
+render();
+
+// Daftar service worker untuk keupayaan luar talian (jika disokong oleh hos).
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  });
+}
+</script>
+</body>
+</html>

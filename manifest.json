@@ -1,0 +1,19 @@
+{
+  "name": "Penilai Kesalahan AJM 2011 — Alat Sokongan PDK",
+  "short_name": "AJM PDK",
+  "description": "Alat sokongan keputusan untuk Pegawai Diberi Kuasa (PDK) — penilaian awal peruntukan di bawah Akta Juruanalisis Makanan 2011, Peraturan 2013 & Garis Panduan Etika.",
+  "lang": "ms",
+  "dir": "ltr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#132A44",
+  "theme_color": "#1F4E7C",
+  "categories": ["government", "productivity", "utilities"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
